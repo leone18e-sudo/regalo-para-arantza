@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Arantza, la chica más linda 💖 - De Leo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&display=swap');
+
+        :root {
+            --rosa-fondo: #ffe5ec;
+            --rosa-fuerte: #ff4d6d;
+            --rosa-medio: #ff8fa3;
+            --azul-stitch: #4cc9f0;
+            --azul-oscuro: #3a86ff;
+            --blanco: #ffffff;
+            --texto: #4a4e69;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Quicksand', sans-serif;
+            background: radial-gradient(circle at top left, #ffe5ec, #e0fbfc, #ffc2d1);
+            color: var(--texto);
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .heart-bg {
+            position: absolute;
+            font-size: 22px;
+            animation: floatUp 8s linear infinite;
+            opacity: 0.6;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(105vh) scale(0.8); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 750px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 35px;
+            padding: 35px 25px;
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
+            border: 5px solid var(--rosa-medio);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Fredoka', sans-serif;
+            margin-top: 0;
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--rosa-fuerte), var(--azul-stitch));
+            color: white;
+            padding: 8px 22px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--rosa-fuerte);
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        .personajes-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .personaje-box {
+            animation: bounce 2.5s infinite ease-in-out;
+        }
+        .personaje-box:nth-child(2) {
+            animation-delay: 1.2s;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .section {
+            border-radius: 25px;
+            padding: 25px 20px;
+            margin: 25px 0;
+            transition: transform 0.3s;
+        }
+
+        .kitty-theme {
+            background: #fff0f3;
+            border: 3px dashed var(--rosa-medio);
+        }
+        .kitty-theme h2 { color: var(--rosa-fuerte); }
+
+        .stitch-theme {
+            background: #eef9ff;
+            border: 3px dashed var(--azul-stitch);
+        }
+        .stitch-theme h2 { color: var(--azul-oscuro); }
+
+        .mix-theme {
+            background: linear-gradient(135deg, #fff0f3 50%, #eef9ff 50%);
+            border: 3px solid #cdb4db;
+        }
+
+        button {
+            font-family: 'Fredoka', sans-serif;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 6px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        button:hover { transform: scale(1.06); }
+        button:active { transform: scale(0.96); }
+
+        .btn-pink { background: var(--rosa-fuerte); color: white; }
+        .btn-blue { background: var(--azul-oscuro); color: white; }
+        .btn-purple { background: #9b5de5; color: white; }
+
+        .counter-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .counter-box {
+            background: white;
+            padding: 10px;
+            border-radius: 15px;
+            border: 2px solid var(--azul-stitch);
+        }
+        .counter-num {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5rem;
+            color: var(--azul-oscuro);
+        }
+        .counter-lbl {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .carta-sobre {
+            background: white;
+            border: 2px solid var(--rosa-medio);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 15px;
+            display: none;
+            text-align: left;
+            line-height: 1.6;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #game-area {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            background: white;
+            border-radius: 20px;
+            border: 2px solid var(--azul-stitch);
+            overflow: hidden;
+            margin-top: 15px;
+        }
+        #target {
+            position: absolute;
+            font-size: 2.5rem;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.25s ease;
+        }
+
+        .quiz-option {
+            display: block;
+            width: 85%;
+            max-width: 380px;
+            margin: 10px auto;
+            background: white;
+            color: var(--texto);
+            border: 2px solid var(--rosa-medio);
+        }
+        .quiz-option:hover {
+            background: var(--rosa-medio);
+            color: white;
+        }
+
+        .meter-bar {
+            width: 100%;
+            height: 25px;
+            background: #e9ecef;
+            border-radius: 50px;
+            overflow: hidden;
+            margin: 15px 0;
+            border: 2px solid var(--rosa-fuerte);
+        }
+        .meter-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--rosa-medio), var(--rosa-fuerte), var(--azul-oscuro));
+            transition: width 1.5s ease-out;
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px dashed var(--rosa-medio);
+            font-weight: 700;
+            color: var(--rosa-fuerte);
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="floating-hearts" id="hearts-container"></div>
+
+<div class="container">
+    <div class="header-badge">🎀 UN REGALO ESPECIAL PARA ARANTZA DE PARTE DE LEO 💙</div>
+    <h1>¡Para la chica más linda del mundo!</h1>
+    <p>Arantza, hice este rinconcito mágico solo para ti, juntando tus personajes favoritos y todo el amor que te tengo.</p>
+
+    <div class="personajes-header">
+        <div class="personaje-box" title="Hello Kitty">
+            <svg width="110" height="100" viewBox="0 0 120 110">
+                <polygon points="22,45 15,12 45,28" fill="#ffffff" stroke="#333" stroke-width="3" stroke-linejoin="round"/>
+                <polygon points="98,45 105,12 75,28" fill="#ffffff" stroke="#333" stroke-width="3" stroke-linejoin="round"/>
+                <ellipse cx="60" cy="62" rx="46" ry="36" fill="#ffffff" stroke="#333" stroke-width="3"/>
+                <ellipse cx="40" cy="64" rx="4" ry="6" fill="#222"/>
+                <ellipse cx="80" cy="64" rx="4" ry="6" fill="#222"/>
+                <ellipse cx="60" cy="72" rx="5" ry="3.5" fill="#ffbe0b" stroke="#333" stroke-width="2"/>
+                <line x1="10" y1="56" x2="26" y2="59" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                <line x1="8" y1="66" x2="25" y2="66" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                <line x1="12" y1="76" x2="27" y2="73" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                <line x1="110" y1="56" x2="94" y2="59" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                <line x1="112" y1="66" x2="95" y2="66" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                <line x1="108" y1="76" x2="93" y2="73" stroke="#333" stroke-width="3" stroke-linecap="round"/>
+                <ellipse cx="84" cy="28" rx="12" ry="9" transform="rotate(-20 84 28)" fill="#ff4d6d" stroke="#333" stroke-width="2.5"/>
+                <ellipse cx="102" cy="36" rx="12" ry="9" transform="rotate(-20 102 36)" fill="#ff4d6d" stroke="#333" stroke-width="2.5"/>
+                <circle cx="93" cy="32" r="6" fill="#ff4d6d" stroke="#333" stroke-width="2.5"/>
+            </svg>
+        </div>
+
+        <div style="font-size: 2rem;">💖</div>
+
+        <div class="personaje-box" title="Stitch">
+            <svg width="120" height="105" viewBox="0 0 130 110">
+                <path d="M35,50 Q5,15 12,5 Q28,0 45,38 Z" fill="#4cc9f0" stroke="#222" stroke-width="3" stroke-linejoin="round"/>
+                <path d="M33,46 Q12,20 16,12 Q26,10 40,36 Z" fill="#ff8fa3"/>
+                <path d="M95,50 Q125,15 118,5 Q102,0 85,38 Z" fill="#4cc9f0" stroke="#222" stroke-width="3" stroke-linejoin="round"/>
+                <path d="M97,46 Q118,20 114,12 Q104,10 90,36 Z" fill="#ff8fa3"/>
+                <ellipse cx="65" cy="65" rx="40" ry="34" fill="#4cc9f0" stroke="#222" stroke-width="3"/>
+                <ellipse cx="47" cy="62" rx="13" ry="15" transform="rotate(-15 47 62)" fill="#bde0fe"/>
+                <ellipse cx="83" cy="62" rx="13" ry="15" transform="rotate(15 83 62)" fill="#bde0fe"/>
+                <ellipse cx="48" cy="63" rx="8" ry="10" fill="#111"/>
+                <circle cx="50" cy="59" r="3" fill="#fff"/>
+                <ellipse cx="82" cy="63" rx="8" ry="10" fill="#111"/>
+                <circle cx="80" cy="59" r="3" fill="#fff"/>
+                <ellipse cx="65" cy="70" rx="9" ry="6" fill="#1d3557"/>
+                <path d="M45,82 Q65,93 85,82" fill="none" stroke="#222" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </div>
+
+    <div class="section mix-theme">
+        <h2>⏳ Tiempo compartiendo sonrisas</h2>
+        <p>Cada momento contigo es increíble, Arantza:</p>
+        <div class="counter-grid">
+            <div class="counter-box">
+                <div class="counter-num" id="days">0</div>
+                <div class="counter-lbl">Días</div>
+            </div>
+            <div class="counter-box">
+                <div class="counter-num" id="hours">0</div>
+                <div class="counter-lbl">Horas</div>
+            </div>
+            <div class="counter-box">
+                <div class="counter-num" id="minutes">0</div>
+                <div class="counter-lbl">Minutos</div>
+            </div>
+            <div class="counter-box">
+                <div class="counter-num" id="seconds">0</div>
+                <div class="counter-lbl">Segundos</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section kitty-theme">
+        <h2>🎀 Una Carta Secreta para Arantza</h2>
+        <p>Hello Kitty guardó este sobre especial para ti. ¿Quieres abrirlo?</p>
+        <button class="btn-pink" onclick="abrirCarta()">💌 Abrir Carta de Amor</button>
+
+        <div class="carta-sobre" id="carta">
+            <p><strong>Para Arantza, la chica más linda:</strong></p>
+            <p>Quería hacerte este detalle único para recordarte lo especial que eres en mi vida. Así como Stitch dice que <em>"Ohana significa familia y que nadie se queda atrás"</em>, tú te has vuelto mi persona favorita en todo el mundo, y Hello Kitty siempre llena todo de una dulzura igualita a la tuya.</p>
+            <p>Gracias por existir, por tus risas y por hacer que cada día sea más bonito. ¡Nunca olvides cuánto te quiero!</p>
+            <p style="text-align: right; color: #ff4d6d;"><strong>Con todo mi corazón, Leo 💖</strong></p>
+        </div>
+    </div>
+
+    <div class="section stitch-theme">
+        <h2>💙 El Frasco de Cumplidos de Stitch</h2>
+        <p>Presiona el botón cada vez que quieras leer algo bonito sobre ti:</p>
+        <button class="btn-blue" onclick="nuevaRazon()">✨ Sacar un cumplido</button>
+        <p id="razon-texto" style="font-size: 1.2rem; font-weight: 700; color: #1d3557; min-height: 35px; margin-top: 15px;"></p>
+    </div>
+
+    <div class="section kitty-theme">
+        <h2>🎮 Mini-Juego: ¡Atrapa los detalles de Arantza!</h2>
+        <p>Haz clic sobre los iconos cada vez que aparezcan para sumar puntos de cariño.</p>
+        <div>
+            <strong>Puntos de Amor: <span id="score" style="color: #ff4d6d; font-size: 1.3rem;">0</span></strong>
+        </div>
+        <div id="game-area">
+            <div id="target" onclick="atrapar()">🎀</div>
+        </div>
+    </div>
+
+    <div class="section stitch-theme">
+        <h2>📝 Cuestionario Especial para Arantza</h2>
+        <div id="quiz-container">
+            <p id="quiz-question" style="font-weight: 700; font-size: 1.15rem;"></p>
+            <div id="quiz-options"></div>
+            <p id="quiz-feedback" style="font-weight: 700; margin-top: 10px;"></p>
+        </div>
+    </div>
+
+    <div class="section mix-theme">
+        <h2>💖 Escáner Oficial de Lindura</h2>
+        <p>Analizando los niveles de hermosura de Arantza...</p>
+        <button class="btn-purple" onclick="escanear()">🔍 Iniciar Escaneo</button>
+        <div class="meter-bar">
+            <div class="meter-fill" id="meter-fill"></div>
+        </div>
+        <p id="meter-result" style="font-weight: 700; font-size: 1.1rem; color: #ff4d6d;"></p>
+    </div>
+
+    <div class="footer">
+        Hecho con todo el amor para Arantza de parte de Leo 🎀💙✨
+    </div>
+</div>
+
+<script>
+    const heartsContainer = document.getElementById('hearts-container');
+    const iconos = ['💖', '🎀', '💙', '✨', '🌸', '⭐'];
+    for (let i = 0; i < 20; i++) {
+        let span = document.createElement('span');
+        span.className = 'heart-bg';
+        span.innerText = iconos[Math.floor(Math.random() * iconos.length)];
+        span.style.left = Math.random() * 100 + 'vw';
+        span.style.animationDuration = (Math.random() * 5 + 6) + 's';
+        span.style.animationDelay = (Math.random() * 5) + 's';
+        heartsContainer.appendChild(span);
+    }
+
+    const fechaInicio = new Date(2025, 0, 1);
+    function actualizarContador() {
+        const ahora = new Date();
+        const diferencia = ahora - fechaInicio;
+
+        const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
+        const minutos = Math.floor((diferencia / 1000 / 60) % 60);
+        const segundos = Math.floor((diferencia / 1000) % 60);
+
+        document.getElementById('days').innerText = dias >= 0 ? dias : 0;
+        document.getElementById('hours').innerText = horas;
+        document.getElementById('minutes').innerText = minutos;
+        document.getElementById('seconds').innerText = segundos;
+    }
+    setInterval(actualizarContador, 1000);
+    actualizarContador();
+
+    function abrirCarta() {
+        const carta = document.getElementById('carta');
+        carta.style.display = carta.style.display === 'block' ? 'none' : 'block';
+    }
+
+    const razones = [
+        "Arantza, tienes la sonrisa más hermosa de todo el universo ✨",
+        "Tu forma de ser ilumina cualquier lugar al que llegas 🌟",
+        "Eres más tierna que Hello Kitty con su moñito 🎀",
+        "Tu risa es la melodía favorita de Leo 🎶",
+        "Tienes unos ojos preciosos que transmiten una paz infinita 👀💖",
+        "Eres una chica inteligente, valiente y con un corazón de oro 🌸",
+        "Hasta Stitch se pondría tranquilo y feliz solo con estar a tu lado 💙"
+    ];
+    let indiceRazon = 0;
+    function nuevaRazon() {
+        document.getElementById('razon-texto').innerText = razones[indiceRazon];
+        indiceRazon = (indiceRazon + 1) % razones.length;
+    }
+
+    let puntos = 0;
+    const target = document.getElementById('target');
+    const gameArea = document.getElementById('game-area');
+    const emojisJuego = ['🎀', '💙', '💖', '🐱', '👽', '⭐'];
+
+    function moverTarget() {
+        const maxX = gameArea.clientWidth - 55;
+        const maxY = gameArea.clientHeight - 55;
+        target.style.left = Math.max(10, Math.floor(Math.random() * maxX)) + 'px';
+        target.style.top = Math.max(10, Math.floor(Math.random() * maxY)) + 'px';
+        target.innerText = emojisJuego[Math.floor(Math.random() * emojisJuego.length)];
+    }
+
+    function atrapar() {
+        puntos++;
+        document.getElementById('score').innerText = puntos;
+        moverTarget();
+        if (puntos === 10) {
+            alert("¡Llegaste a 10 puntos, Arantza! Te ganaste un abrazo gigante y mucho amor de parte de Leo 💖");
+        }
+    }
+    setInterval(moverTarget, 1300);
+
+    const preguntas = [
+        {
+            p: "1. ¿Quién es la chica más hermosa, inteligente y linda?",
+            opciones: ["Arantza, sin duda alguna 💖", "Definitivamente Arantza 🎀", "¡Arantza por siempre! ✨"],
+            respuesta: "¡Exacto! No había respuesta incorrecta porque eres tú."
+        },
+        {
+            p: "2. ¿Qué significa 'Ohana' para Stitch y para Leo?",
+            opciones: ["Que Arantza es mi persona favorita 💙", "Que nunca te dejaré sola 🌟", "¡Todas las opciones anteriores! 🥰"],
+            respuesta: "¡Siií! Eres lo más valioso para Leo."
+        },
+        {
+            p: "3. ¿Quién preparó esta página con todo su cariño?",
+            opciones: ["Leo, pensando en Arantza 💖", "Hello Kitty y Stitch 🎀💙", "Leo con ayuda de Hello Kitty y Stitch ✨"],
+            respuesta: "¡Correcto! Hecho exclusivamente para sacarle una sonrisa a Arantza."
+        }
+    ];
+    let qActual = 0;
+
+    function cargarPregunta() {
+        const container = document.getElementById('quiz-container');
+        if (qActual >= preguntas.length) {
+            container.innerHTML = `
+                <h3 style="color:#ff4d6d;">🎉 ¡Felicidades Arantza, 100/100! 🎉</h3>
+                <p>Eres oficialmente la dueña absoluta del corazón de Leo, Hello Kitty y Stitch.</p>
+                <button class="btn-pink" onclick="reiniciarQuiz()">Volver a jugar</button>
+            `;
+            return;
+        }
+        const item = preguntas[qActual];
+        document.getElementById('quiz-question').innerText = item.p;
+        const optsDiv = document.getElementById('quiz-options');
+        optsDiv.innerHTML = '';
+        document.getElementById('quiz-feedback').innerText = '';
+
+        item.opciones.forEach(op => {
+            const btn = document.createElement('button');
+            btn.className = 'quiz-option';
+            btn.innerText = op;
+            btn.onclick = () => {
+                document.getElementById('quiz-feedback').innerText = item.respuesta;
+                setTimeout(() => {
+                    qActual++;
+                    cargarPregunta();
+                }, 1300);
+            };
+            optsDiv.appendChild(btn);
+        });
+    }
+
+    function reiniciarQuiz() {
+        qActual = 0;
+        document.getElementById('quiz-container').innerHTML = `
+            <p id="quiz-question" style="font-weight: 700; font-size: 1.15rem;"></p>
+            <div id="quiz-options"></div>
+            <p id="quiz-feedback" style="font-weight: 700; margin-top: 10px;"></p>
+        `;
+        cargarPregunta();
+    }
+    cargarPregunta();
+
+    function escanear() {
+        const fill = document.getElementById('meter-fill');
+        const res = document.getElementById('meter-result');
+        fill.style.width = '100%';
+        res.innerText = "Analizando a Arantza...";
+        setTimeout(() => {
+            res.innerText = "¡ALERTA MÁXIMA! Nivel de lindura de Arantza: 1,000,000% (¡Rompiste el medidor de lo hermosa que eres!) 💖🎀💙";
+        }, 1500);
+    }
+</script>
+
+</body>
+</html>
